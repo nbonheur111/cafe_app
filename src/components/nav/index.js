@@ -1,8 +1,13 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 
-function Nav() {
+const Nav = () => {
   return (
-    <div>Nav</div>
+    <nav>
+      <Link to="/orders">Order History</Link>
+      &nbsp; | &nbsp;
+      <Link to="/orders/new">New Order</Link>
+    </nav>
   )
 }
 
