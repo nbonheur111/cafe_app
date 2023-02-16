@@ -1,3 +1,4 @@
+import axios from 'axios'
 import React, { useEffect, useState } from 'react';
 import { logIn } from '../../utilities/user-functions.js'
 
@@ -11,6 +12,15 @@ const Login = () => {
     useEffect(() => {
         setDisabled(formState.email && formState.password ? false : true);
     }, [formState])
+
+    useEffect(() => {
+      let getSessionInfo = async () => {
+        let res = await axios('/session-info')
+        console.log(res)
+      }
+      getSessionInfo()
+
+    }, [])
 
 
     const handleChange = (event) => {

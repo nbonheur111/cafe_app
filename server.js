@@ -9,7 +9,7 @@ const bcrypt = require('bcrypt') // hide password. cant' be undone
 const User = require('./models/user')
 const passport = require('passport')
 const session = require('express-session')
-const initializePassport = require('./config/passport-config')
+const initializePassport = require('./config/passport-config.js')
 
 
 const app = express()
@@ -56,6 +56,14 @@ app.get('/test_route', (req, res) => {
     res.send("good route")
 
 })
+
+app.get('/session-info', (req, res) => {
+    res.json({
+        session: req.session
+    })
+})
+
+
 app.post('/users/signup', async(req, res) => {
 
     let hashedPassword = await bcrypt.hash(req.body.password, 10)
@@ -71,12 +79,12 @@ app.post('/users/signup', async(req, res) => {
     res.json("Good route")
 })
 
-app.put('/users/login', async (req, res) => {
+app.put('/users/login', async (req, res, next) => {
     console.log(req.body)
     //passport authenticate
     //define which authentication method to use
 
-    passport.authenticate("local", (err, user, message) =>{
+    passport.authenticate("local", (err, user) =>{
         if(err) throw err;
         if(!user){
             res.json({
@@ -88,12 +96,11 @@ app.put('/users/login', async (req, res) => {
             req.logIn(user, err => {
                 res.json({
                     message: "sucessfully authenticated",
-                    user: user
                 })
             })
         }
 
-    }) //
+    }) (req, res, next)
 })
 //catch all route
 //should be last router to avoid hit it before other routes
