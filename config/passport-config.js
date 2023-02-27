@@ -13,6 +13,7 @@ module.exports = async function(passport){
         new localStrategy({usernameField: "email"},async(email, password, done) => {
             //check if user with this email exist
             const user = await User.findOne({email: email})
+            console.log(email, password, user)
             console.log("got user", user);
 
             if(!user){

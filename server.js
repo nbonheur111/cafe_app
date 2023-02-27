@@ -6,10 +6,17 @@ const cors = require('cors')//cross origin access management(are you allowed to 
 require('dotenv').config();
 require('./config/database');
 const bcrypt = require('bcrypt') // hide password. cant' be undone
-const User = require('./models/user')
+// MODELS //
+const User = require('./models/user');
+const category = require('./models/category')
+const Item = require('./models/item')
+
+
+//Passport//
 const passport = require('passport')
 const session = require('express-session')
 const initializePassport = require('./config/passport-config.js')
+
 
 
 const app = express()
@@ -24,6 +31,12 @@ app.use(logger('dev'))
 app.use(express.json())
 // server build folder
 app.use(express.static(path.join(__dirname, 'build')));
+
+app.get('/get_categories', async (req, res) => {
+    let arrayofCategories = await category.find();
+    console.log(arrayofCategories)
+    res.json(arrayofCategories)
+})
 
 initializePassport(
     passport,
@@ -48,13 +61,18 @@ app.use(session({
 
 
 
-app.get("/user", (req, res) => {
-    res.send("user router!")
+
+
+app.get('/get_categories', async (req, res) => {
+    let arrayOfCategories = await Category.find();
+    console.log(arrayOfCategories);
+    res.json(arrayOfCategories)
 })
 
-app.get('/test_route', (req, res) => {
-    res.send("good route")
-
+app.get('/get_items', async (req, res) => {
+    let arrayOfItems = await Item.find();
+    console.log(arrayOfItems);
+    res.json(arrayOfItems)
 })
 
 app.get('/session-info', (req, res) => {
@@ -63,6 +81,14 @@ app.get('/session-info', (req, res) => {
     })
 })
 
+app.get("/user", (req, res) => {
+    res.send("user router!")
+})
+
+app.get('/test_route', (req, res) => {
+    res.send("good route")
+
+});
 
 app.post('/users/signup', async(req, res) => {
 

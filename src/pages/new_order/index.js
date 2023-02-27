@@ -1,9 +1,18 @@
 import React from 'react'
+import Cart from '../../cart'
+import MenuList from '../../components/menu_list'
+import './index.css'
 
-function NewOrderPage() {
+const NewOrder = () => {
   return (
-    <div>NewOrderPage</div>
+   
+    <div className='NewOrderPage'>
+       <MenuList />
+       <Cart />
+    
+
+    </div>
   )
 }
 
-export default NewOrderPage
+export default NewOrder

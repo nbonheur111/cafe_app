@@ -1,11 +1,15 @@
 import React, { useState } from 'react'
 import SignUpForm from '../../components/signup_form'
 import Login from '../../components/login_form'
+import Logo from '../../components/logo'
 import './index.css';
 
 
-function AuthPage() {
+function Auth(props) {
+  // let {setUser} = props
+  //  let setUser = props.setUser; does the same thing
 
+  
   const [isSignup, setIsSignup] = useState(true);
 
   const handleButtonClick = () => {
@@ -15,20 +19,18 @@ function AuthPage() {
   return (
     <section className="auth-page">
       <div className="logo-container">
-        <div>Logo</div>
-        <div className="login-button" onClick={handleButtonClick}>{isSignup ? "Login" : "Sign up"}</div>
+        <Logo />
+        <button className="login-button btn-sm" onClick={handleButtonClick}>{isSignup ? "Login" : "Sign up"}</button>
       </div>
 
       {isSignup ?
       <SignUpForm />
       :
       <Login />
-
       }
       
     </section>
-    
   )
 }
 
-export default AuthPage
+export default Auth
